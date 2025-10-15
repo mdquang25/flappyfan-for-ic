@@ -1,0 +1,21 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /usernames/{username} {
+      allow read: if true;
+      // create only if not exists and auth uid matches
+      allow create: if request.auth != null
+                    && request.resource.data.uid == request.auth.uid
+                    && !(exists(/databases/$(database)/documents/usernames/$(username)));
+      // prevent updates/deletes from others
+      allow update, delete: if false;
+    }
+
+    match /players/{uid} {
+      allow read: if true;
+      // only the authenticated user can create/update their player doc
+      allow create, update: if request.auth != null && request.auth.uid == uid;
+      allow delete: if false;
+    }
+  }
+}
