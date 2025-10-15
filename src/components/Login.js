@@ -78,7 +78,7 @@ export default function Login({ onLoggedIn }) {
                         letterSpacing: "2px",
                     }}
                 >
-                    🕹 FLAPPY BIRD TOURNAMENT
+                    FLAPPYBIRD from IC club
                 </h1>
 
                 <input

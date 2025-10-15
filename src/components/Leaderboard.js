@@ -135,7 +135,7 @@ export default function Leaderboard({ currentUser }) {
                                         textOverflow: "ellipsis",
                                         maxWidth: 200,
 
-                                        color: "#ffcb05",
+                                        color: "#ffffff",
                                         fontSize: "0.85em",
                                         marginLeft: 6,
                                         marginRight: 6,

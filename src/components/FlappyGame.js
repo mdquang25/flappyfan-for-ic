@@ -205,7 +205,11 @@ export default function FlappyGameSprites({ user }) {
             else if (bird.frame === 2) birdImg = imgs.birdDown;
             ctx.save();
             const rot = Math.max(-0.6, Math.min(0.8, bird.vy * 0.06));
-            ctx.translate(bird.x, bird.y);
+            if (stateRef.current === "GET_READY") {
+                ctx.translate(bird.x, bird.displayY);
+            } else {
+                ctx.translate(bird.x, bird.y);
+            }
             ctx.rotate(rot);
             ctx.drawImage(birdImg, -bird.w / 2, -bird.h / 2, bird.w, bird.h);
             ctx.restore();
