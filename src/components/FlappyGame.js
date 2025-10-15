@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { submitScore } from "../firebase";
+import { color } from "framer-motion";
 
 const ASSET_BASE = process.env.PUBLIC_URL + "/assets";
 
@@ -368,7 +369,7 @@ export default function FlappyGameSprites({ user }) {
     // ===============================
     return (
         <div style={{ textAlign: "center", userSelect: "none" }}>
-            <h3>🐦 FlappyBird from IC — {user?.username || "Khách"}</h3>
+            <div className="mb-3 fs-4 fw-bold" style={{ color: "#399cff" }}>🐦 FlappyBird from IC — {user?.username || "Khách"}</div>
             {!ready ? (
                 <div style={{ padding: 40 }}>
                     <p>{loadingText}</p>
