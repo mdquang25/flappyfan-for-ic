@@ -77,7 +77,12 @@ export default function FlappyGameSprites({ user }) {
                 imgs.birdDown = await loadImage(`${base}/bluebird-downflap.png`);
                 imgs.message = await loadImage(`${base}/message.png`);
                 imgs.gameover = await loadImage(`${base}/gameover.png`);
-
+                // Load digits (0–9)
+                imgs.digits = [];
+                for (let i = 0; i <= 9; i++) {
+                    imgs.digits[i] = await loadImage(`${base}/${i}.png`);
+                }
+                setLoadingText("Đang tải âm thanh...");
                 const aud = {};
                 const aBase = ASSET_BASE + "/audio";
                 aud.wing = loadAudio(`${aBase}/wing.wav`);
@@ -215,11 +220,31 @@ export default function FlappyGameSprites({ user }) {
             ctx.restore();
 
             // Score
-            ctx.fillStyle = "#fff";
-            ctx.font = "36px Arial";
-            ctx.textAlign = "center";
-            ctx.fillText(scoreLocal, W / 2, 60);
+            // ctx.fillStyle = "#fff";
+            // ctx.font = "36px Arial";
+            // ctx.textAlign = "center";
+            // ctx.fillText(scoreLocal, W / 2, 60);
+            // === Vẽ điểm số bằng sprites ===
+            const scoreStr = scoreLocal.toString();
+            const digitImgs = imgs.digits;
 
+            // Giả sử mỗi số có cùng width/height
+            const digitW = digitImgs[0].width;
+            const digitH = digitImgs[0].height;
+            const totalW = scoreStr.length * digitW;
+
+            // Bắt đầu từ giữa màn hình
+            let xStart = (W - totalW) / 2;
+            const y = 40; // vị trí Y hiển thị score
+
+            for (let i = 0; i < scoreStr.length; i++) {
+                const d = parseInt(scoreStr[i]);
+                ctx.drawImage(digitImgs[d], xStart, y, digitW, digitH);
+                xStart += digitW;
+            }
+            // === Hết vẽ điểm số bằng sprites ===
+
+            // Vẽ thông báo
             const current = stateRef.current;
             if (current === "GET_READY") {
                 ctx.drawImage(imgs.message, (W - imgs.message.width) / 2, 140);
